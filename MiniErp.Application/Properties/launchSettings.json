@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "MiniErp.Application": {
+      "commandName": "Project"
+    }
+  }
+}
