@@ -27,8 +27,6 @@ namespace MiniErp.Api.Default
 
         public IConfiguration Configuration { get; }
 
-
-
         public override void BeforeConfigureServices(IServiceCollection services)
         {
             base.BeforeConfigureServices(services);

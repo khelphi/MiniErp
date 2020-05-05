@@ -25,7 +25,6 @@ namespace MiniErp.Api.Default.Controllers.v1
             this.partnerService = _partnerService;
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] PartnerPostRequest request)
         {
@@ -34,7 +33,7 @@ namespace MiniErp.Api.Default.Controllers.v1
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(PartnerPutRequest request)
+        public async Task<IActionResult> Put([FromBody] PartnerPutRequest request)
         {
             var result = await partnerService.UpdateAsync(request);
             return HttpHelper.Convert(result);

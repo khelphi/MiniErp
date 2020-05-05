@@ -17,6 +17,9 @@ namespace MiniErp.Application.Errors
         [Description("É necessário informar o Documento do Parceiro")]
         Partner_Post_400_Document_Cannot_Be_Null_Or_Empty,
 
+        [Description("Ja existe um parceiro cadastrado com esse documento")]
+        Partner_Post_400_Document_Cannot_Be_Duplicate,
+
         [Description("Payload inválido")]
         Partner_Post_400_Payload_Cannot_Be_Null_Or_Empty,
 
@@ -33,6 +36,9 @@ namespace MiniErp.Application.Errors
 
         [Description("É necessário informar o Documento do Parceiro")]
         Partner_Put_400_Document_Cannot_Be_Null_Or_Empty,
+
+        [Description("Ja existe um outro parceiro cadastrado com esse documento")]
+        Partner_Put_400_Document_Cannot_Be_Duplicate
 
     }
 }

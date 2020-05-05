@@ -78,6 +78,17 @@ namespace MiniErp.Application.Data.MySql.Repositories
 
         }
 
+        public async Task<PartnerEntity> GetByDocument(string document)
+        {
+            using (var cnx = _context.conexao())
+            {
+                string _query = $@"select partnerId, name, document, situation, status, partnerCode from Partner where document = '{document}' Limit 1";
+                var result = await cnx.QueryAsync<PartnerEntity>(_query);
+                return result.FirstOrDefault();
+            }
+
+        }
+
 
         public async Task<bool> DeleteById(Guid partnerId)
         {

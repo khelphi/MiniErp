@@ -28,8 +28,10 @@ namespace MiniErp.Application.Services.v1
             var validator = new PartnerPostRequestValidator();
             var validationResult = validator.Validate(request);
 
-            //if (request.Name =="")
-            //    return ErrorData<MiniErpErrors>(MiniErpErrors.Partner_Post_400_Document_Cannot_Be_Null_Or_Empty.ToString());
+            var existPartner = await partnerRepository.GetByDocument(request.Document);
+
+            if (existPartner != null)
+                return ErrorData<MiniErpErrors>(MiniErpErrors.Partner_Post_400_Document_Cannot_Be_Duplicate.ToString());
 
             if (!validationResult.IsValid)
                 return ErrorData<MiniErpErrors>(validationResult.Errors.ToErrorCodeList());
@@ -45,6 +47,11 @@ namespace MiniErp.Application.Services.v1
 
             var validator = new PartnerPutRequestValidator();
             var validationResult = validator.Validate(request);
+
+            var existPartner = await partnerRepository.GetByDocument(request.Document);
+
+            if (existPartner != null && existPartner.PartnerId != request.PartnerId)
+                return ErrorData<MiniErpErrors>(MiniErpErrors.Partner_Put_400_Document_Cannot_Be_Duplicate.ToString());
 
             if (!validationResult.IsValid)
                 return ErrorData<MiniErpErrors>(validationResult.Errors.ToErrorCodeList());
