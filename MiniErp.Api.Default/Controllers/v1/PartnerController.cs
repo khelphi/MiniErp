@@ -62,5 +62,13 @@ namespace MiniErp.Api.Default.Controllers.v1
         }
 
 
+        [HttpGet("GetByFilter")]
+        public async Task<IActionResult> GetByFilter([FromQuery] PartnerFilteredRequest request)
+        {
+            var result = await partnerService.GetByFilter(request);
+            return HttpHelper.Convert(result);
+        }
+
+
     }
 }

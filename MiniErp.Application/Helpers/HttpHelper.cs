@@ -37,7 +37,7 @@ namespace MiniErp.Application.Helpers
 
         }
         
-        public static IActionResult Convert(ResultData result)
+        public static IActionResult Convert(DefaultDataResponse result)
         {
             if (result == null)
             {

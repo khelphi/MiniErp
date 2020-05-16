@@ -7,22 +7,22 @@ namespace MiniErp.Application.Helpers
     public abstract class BaseService
     {
 
-        public ResultData<T> SuccessData<T>(T data)
+        public DefaultDataResponse<T> SuccessResponse<T>(T data)
         {
-            return new ResultData<T>(data);
+            return new DefaultDataResponse<T>(data);
         }
 
-        public ResultData SuccesData()
+        public DefaultDataResponse SuccessResponse()
         {
-            return new ResultData(true);
+            return new DefaultDataResponse(true);
         }
         
-        public ResultData ErrorData<T>(List<string> metaError) where T : struct
+        public DefaultDataResponse ErrorResponse<T>(List<string> metaError) where T : struct
         {
             return new ErrorData<T>(metaError);
         }
 
-        public ResultData ErrorData<T>(string metaError) where T : struct
+        public DefaultDataResponse ErrorResponse<T>(string metaError) where T : struct
         {
             return new ErrorData<T>(metaError);
         }

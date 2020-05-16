@@ -8,7 +8,7 @@ using MiniErp.Application.Validators.Partner.Request;
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
-
+using MiniErp.Application.Data.MySql.Views;
 
 namespace MiniErp.Application.Services.v1
 {
@@ -22,27 +22,31 @@ namespace MiniErp.Application.Services.v1
             this.partnerRepository = _partnerRepository;
         }
 
-        public async Task<ResultData> CreateAsync(PartnerPostRequest request) 
-        {
 
+        /// <summary>
+        /// 
+        /// </summary> 
+        /// <param name="request"></param>
+        public async Task<DefaultDataResponse> CreateAsync(PartnerPostRequest request) 
+        {
+            
             var validator = new PartnerPostRequestValidator();
             var validationResult = validator.Validate(request);
 
             var existPartner = await partnerRepository.GetByDocument(request.Document);
 
             if (existPartner != null)
-                return ErrorData<MiniErpErrors>(MiniErpErrors.Partner_Post_400_Document_Cannot_Be_Duplicate.ToString());
+                return ErrorResponse<MiniErpErrors>(MiniErpErrors.Partner_Post_400_Document_Cannot_Be_Duplicate.ToString());
 
             if (!validationResult.IsValid)
-                return ErrorData<MiniErpErrors>(validationResult.Errors.ToErrorCodeList());
-
+                return ErrorResponse<MiniErpErrors>(validationResult.Errors.ToErrorCodeList());
 
             var partner = new PartnerEntity(request);
             var result = await partnerRepository.CreateAsync(partner);
-            return SuccessData(result);
+            return SuccessResponse(result);
         }
 
-        public async Task<ResultData> UpdateAsync(PartnerPutRequest request)
+        public async Task<DefaultDataResponse> UpdateAsync(PartnerPutRequest request)
         {
 
             var validator = new PartnerPutRequestValidator();
@@ -51,43 +55,54 @@ namespace MiniErp.Application.Services.v1
             var existPartner = await partnerRepository.GetByDocument(request.Document);
 
             if (existPartner != null && existPartner.PartnerId != request.PartnerId)
-                return ErrorData<MiniErpErrors>(MiniErpErrors.Partner_Put_400_Document_Cannot_Be_Duplicate.ToString());
+                return ErrorResponse<MiniErpErrors>(MiniErpErrors.Partner_Put_400_Document_Cannot_Be_Duplicate.ToString());
 
             if (!validationResult.IsValid)
-                return ErrorData<MiniErpErrors>(validationResult.Errors.ToErrorCodeList());
+                return ErrorResponse<MiniErpErrors>(validationResult.Errors.ToErrorCodeList());
+
 
 
             var partner = new PartnerEntity(request);
             var result = await partnerRepository.CreateAsync(partner);
-            return SuccessData(result);
+            return SuccessResponse(result);
         }
 
 
-        public async Task<ResultData> GetById(Guid partnerId) 
+        public async Task<DefaultDataResponse> GetById(Guid partnerId) 
         {
             var result = await partnerRepository.GetById(partnerId);
-            return SuccessData(result);
+            return SuccessResponse(result);
         }
 
-        public async Task<ResultData> GetAll()
+        public async Task<DefaultDataResponse> GetAll()
         {
             var result = await partnerRepository.GetAll();
-            return SuccessData(result);
+            return SuccessResponse(result);
         }
 
-        public async Task<ResultData> DeleteById(Guid partnerId)
+        public async Task<DefaultDataResponse> DeleteById(Guid partnerId)
         {
             var partner = await partnerRepository.GetById(partnerId);
             if (partner == null)
-                return ErrorData<MiniErpErrors>(MiniErpErrors.Partner_Get_400_PartnerId_Not_Found.ToString());
+                return ErrorResponse<MiniErpErrors>(MiniErpErrors.Partner_Get_400_PartnerId_Not_Found.ToString());
 
             var result = await partnerRepository.DeleteById(partnerId);
             
             if (result)
-               return SuccessData("Parceiro Excluído com sucesso");
+               return SuccessResponse("Parceiro Excluído com sucesso");
             else
-               return ErrorData<MiniErpErrors>(MiniErpErrors.Partner_Delete_400_Connot_Delete_Partner.ToString());
+               return ErrorResponse<MiniErpErrors>(MiniErpErrors.Partner_Delete_400_Connot_Delete_Partner.ToString());
         }
+
+
+        public async Task<DefaultDataResponse> GetByFilter(PartnerFilteredRequest request)
+        {
+            //var validator = new PartnerFilteredRequestValidator();
+            var result = await partnerRepository.GetByFilter(request);
+            return SuccessResponse(result);
+
+        }
+
 
     }
 }

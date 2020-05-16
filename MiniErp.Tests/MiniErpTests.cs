@@ -2,16 +2,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MiniErp.Application.Data;
 using MiniErp.Application.Data.MySql.Repositories;
-using MiniErp.Application.Helpers;
 using MiniErp.Application.Services.v1;
 using MiniErp.Application.Settings;
-using Moq;
 
 namespace MiniErp.Tests
 {
     public class MiniErpTests: Startup
     {
         protected PartnerService Service;
+        protected PartnerRepository Repository;
         public MiniErpTests()
         {
             
@@ -23,6 +22,7 @@ namespace MiniErp.Tests
 
             var serviceProvider = services.BuildServiceProvider();
             Service = (PartnerService)serviceProvider.GetService(typeof(PartnerService));
+            Repository = (PartnerRepository)serviceProvider.GetService(typeof(PartnerRepository));
         }
 
     }

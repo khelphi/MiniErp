@@ -1,5 +1,9 @@
 ﻿using Dapper;
+using MiniErp.Application.Contracts.v1.Partners.Request;
 using MiniErp.Application.Data.MySql.Entities;
+using MiniErp.Application.Data.MySql.StaticTypes;
+using MiniErp.Application.Data.MySql.Views;
+using MiniErp.Application.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +22,24 @@ namespace MiniErp.Application.Data.MySql.Repositories
         public PartnerRepository(MySqlContext context)
         {
             this._context = context;
+        }
+
+        public async Task<bool> ExecuteAsync(string _query)
+        {
+            bool _result = false;
+            try
+            {
+                using (var cnx = _context.conexao())
+                {
+                    await cnx.ExecuteAsync(_query);
+                    _result = true;
+                }
+            }
+            catch (Exception)
+            {
+                _result = false;
+            }
+            return _result;
         }
 
 
@@ -121,6 +143,48 @@ namespace MiniErp.Application.Data.MySql.Repositories
                 var result = await cnx.QueryAsync<PartnerEntity>(_query);
                 return result.ToList();
             }
+        }
+
+        public async Task<PaginationResponse<PartnerFilteredView>> GetByFilter(PartnerFilteredRequest filter)
+        {
+
+            using (var cnx = _context.conexao())
+            {
+                var _query = new StringBuilder($@"select * from Partner where 1=1");
+                var where = new StringBuilder();
+
+
+                if (!string.IsNullOrEmpty(filter.Name))
+                    where.Append($" AND name like '%{filter.Name}%'");
+
+                if (!string.IsNullOrEmpty(filter.Document))
+                    where.Append($" AND document = '{filter.Document}'");
+
+                if (!string.IsNullOrEmpty(filter.PartnerCode))
+                    where.Append($" AND partnerCode = '{filter.PartnerCode}'");
+
+                if (filter.Status != PartnerStatusType.All)
+                    where.Append($" AND status = {filter.Status.GetHashCode()}");
+
+                _query.Append(where);
+
+
+                if (filter.page > 0 && filter.pageSize > 0)
+                    _query.Append($" Limit {filter.pageSize * (filter.page - 1)}, {filter.pageSize}");
+
+                var result = await cnx.QueryAsync<PartnerFilteredView>(_query.ToString());
+                var totalRows = result.Count();
+
+                return new PaginationResponse<PartnerFilteredView>
+                {
+                    Items = result.ToArray(),
+                    _pageSize = filter.pageSize,
+                    _page = filter.page,
+                    _total = totalRows
+                };
+
+            }
+
         }
 
     }

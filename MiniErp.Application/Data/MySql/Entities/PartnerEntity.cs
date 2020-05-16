@@ -86,32 +86,40 @@ namespace MiniErp.Application.Data.MySql.Entities
         /// <summary>
         /// Id do Parceiro
         /// </summary>
+        
+        [Column("partnerId")]
         public Guid PartnerId { get; set; }
 
         /// <summary>
         /// Nome do Parceiro
         /// </summary>
+        [Column("Name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Numero do Documento do Parceiro
         /// </summary>
+        [Column("document")]
         public string Document { get; set; }
 
         /// <summary>
         /// Situation do Parceiro
         /// </summary>
+        [Column("situation")]
         public int Situation { get; set; }
 
         /// <summary>
         /// Status do Parceiro
         /// </summary>
+        [Column("status")]
         public PartnerStatusType Status { get; set; }
 
         /// <summary>
         /// Codigo do Parceiro
         /// </summary>
+        [Column("partnerCode")]
         public string PartnerCode { get; set; }
+        
 
     }
 }

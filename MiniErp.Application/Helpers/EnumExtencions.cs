@@ -65,6 +65,5 @@ namespace MiniErp.Application.Helpers
         {
             return ErrorDescription((Enum)errorItem, parameters);
         }
-
     }
 }

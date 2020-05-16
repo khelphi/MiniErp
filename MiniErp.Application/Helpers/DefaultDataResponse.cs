@@ -4,24 +4,25 @@ using System.Text;
 
 namespace MiniErp.Application.Helpers
 {
-    public class ResultData
+    public class DefaultDataResponse
     {
 
-        public ResultData(bool success)
+        public DefaultDataResponse(bool success)
         {
             this.Success = success;
         }
-        public virtual bool Success { get; private set; }
+        public virtual bool Success { get; set; }
 
     }
-    public class ResultData<T> : ResultData
+    public class DefaultDataResponse<T> : DefaultDataResponse
     {
-        public ResultData(T data) : base(true)
+        public DefaultDataResponse(T data) : base(true)
         {
             this.Data = data;
         }
 
         public T Data { get; private set; }
+
     }
      
 }

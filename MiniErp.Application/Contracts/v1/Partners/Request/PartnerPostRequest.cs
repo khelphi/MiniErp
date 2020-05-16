@@ -12,15 +12,11 @@ namespace MiniErp.Application.Contracts.v1.Partners.Request
     /// </summary>
     public class PartnerPostRequest
     {
-        //[Required()]
+
         public string  Name { get; set;}
-        //[Required()]
         public string Document { get; set; }
-        //[Required()]
         public int Situation { get; set; }
-        //[Required()]
         public PartnerStatusType Status { get; set; }
-        //[Required()]
         public string PartnerCode { get; set; }
 
     }

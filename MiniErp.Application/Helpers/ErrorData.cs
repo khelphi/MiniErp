@@ -7,7 +7,7 @@ using System.Text;
 namespace MiniErp.Application.Helpers
 {
 
-    public class ErrorData<T> : ResultData where T : struct
+    public class ErrorData<T> : DefaultDataResponse where T : struct
     {
 
        
@@ -17,7 +17,6 @@ namespace MiniErp.Application.Helpers
         {
             Errors = new List<ErrorReturn>();
         }
-
 
         public ErrorData(List<string> errorsCode) : this()
         {
@@ -36,16 +35,6 @@ namespace MiniErp.Application.Helpers
                 var errorDesc = Enum.Parse(typeof(T), item).ErrorDescription(item);
                 Replace(errorDesc.Error, paramReplace);
                 Errors.Add(errorDesc.Error);
-            }
-        }
-
-        protected virtual void BindErrors(List<T> errorsCode, object paramReplace = null)
-        {
-            foreach (var item in errorsCode)
-            {
-                var errorDescription = item.ErrorDescription();
-                Replace(errorDescription.Error, paramReplace);
-                Errors.Add(errorDescription.Error);
             }
         }
 

@@ -18,7 +18,13 @@ namespace MiniErp.Application.Data.MySql.StaticTypes
         /// Indica que o parceiro esta Inatico
         /// </summary>
         [Display(Name = "Inativo")]
-        Inactive =0
+        Inactive =0,
+
+        /// <summary>
+        /// Todos os Parceirtos, para efeito de filtro
+        /// </summary>
+        [Display(Name = "Todos")]
+        All =-1
 
     }
 }
