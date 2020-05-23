@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MiniErp.Application.Contracts.v1.PartnersContact
+namespace MiniErp.Application.Contracts.v1.PartnersContact.Request
 {
-    public class PartnerContactPostRequest
+    public class PartnerContactPutRequest
     {
+
         public Guid Id { get; set; }
         public Guid PartnerId { get; set; }
         public string ContactName { get; set; }
@@ -14,6 +15,5 @@ namespace MiniErp.Application.Contracts.v1.PartnersContact
         public string PhoneNumber1 { get; set; }
         public string PhoneNumber2 { get; set; }
         public string Information { get; set; }
-
     }
 }

@@ -38,7 +38,11 @@ namespace MiniErp.Application.Errors
         Partner_Put_400_Document_Cannot_Be_Null_Or_Empty,
 
         [Description("Ja existe um outro parceiro cadastrado com esse documento")]
-        Partner_Put_400_Document_Cannot_Be_Duplicate
+        Partner_Put_400_Document_Cannot_Be_Duplicate,
+
+
+        [Description("Falha ao tentar excluir o Contato do Parceiro")]
+        PartnerContact_Delete_400_Connot_Delete_PartnerContact,
 
     }
 }

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MiniErp.Application.Contracts.v1.PartnersDocument
+namespace MiniErp.Application.Contracts.v1.PartnersDocument.Request
 {
     public class PartnerDocumentPostRequest
     {
-        public Guid Id { get; set; }
         public string Description { get; set; }
     }
 }

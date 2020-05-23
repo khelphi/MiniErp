@@ -173,6 +173,7 @@ namespace MiniErp.Application.Data.MySql.Repositories
                     _query.Append($" Limit {filter.pageSize * (filter.page - 1)}, {filter.pageSize}");
 
                 var result = await cnx.QueryAsync<PartnerFilteredView>(_query.ToString());
+
                 var totalRows = result.Count();
 
                 return new PaginationResponse<PartnerFilteredView>

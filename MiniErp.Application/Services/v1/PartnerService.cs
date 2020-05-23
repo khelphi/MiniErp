@@ -99,6 +99,13 @@ namespace MiniErp.Application.Services.v1
         {
             //var validator = new PartnerFilteredRequestValidator();
             var result = await partnerRepository.GetByFilter(request);
+
+            foreach (var item in result.Items)
+            {
+                //item.Contacts.Add();
+            }
+
+
             return SuccessResponse(result);
 
         }
